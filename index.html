@@ -460,6 +460,7 @@
     </footer>
 
   <script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
   const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
   const nav = document.querySelector('header nav');
@@ -479,25 +480,22 @@ document.addEventListener('DOMContentLoaded', function() {
       nav.querySelector('.nav-links').classList.remove('active');
     });
   });
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-  const nav = document.querySelector('header nav');
-  
-  mobileMenuToggle.addEventListener('click', function() {
-    nav.querySelector('.nav-links').classList.toggle('active');
-  });
 
   // Form submission
   var form = document.getElementById('signup-form');
   var submitButton = form.querySelector('button[type="submit"]');
   var thankYouMessage = document.getElementById('thank-you-message');
-  var errorMessage = document.getElementById('error-message');
+  var errorMessage = document.createElement('div');
+  errorMessage.id = 'error-message';
+  errorMessage.style.display = 'none';
+  errorMessage.style.color = 'red';
+  form.parentNode.insertBefore(errorMessage, form.nextSibling);
   
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     
     // Disable submit button to prevent double submission
-     submitButton.disabled = true;
+    submitButton.disabled = true;
     
     var formData = new FormData(form);
     fetch('https://script.google.com/macros/s/AKfycbxfh6DumZ5OdjRSBNYG27B7YK40B8tajTA-brCHpPdRTQZpYOfHLE7HfIeAUUM3MQkyTg/exec', {
@@ -528,11 +526,10 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .finally(() => {
       // Re-enable submit button
-    submitButton.disabled = false;
+      submitButton.disabled = false;
     });
   });
-
-  // Shrink header on scroll
+// Shrink header on scroll
   window.addEventListener('scroll', function() {
     if (window.scrollY > 100) {
       document.querySelector('header').style.height = '60px';
@@ -588,26 +585,6 @@ document.addEventListener('DOMContentLoaded', function() {
       card.style.setProperty('--mouse-y', `${y}px`);
     });
   });
-});
-  </script>
-<script>
-document.getElementById('signup-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    var form = this;
-    var formData = new FormData(form);
-    fetch('https://script.google.com/macros/s/AKfycbweWYdtOmMkiSglwIRj9V53jjjQzaVNv1L6riMJ-ycqGE17PZ4apcJUGM22voER2U_1ug/exec', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(result => {
-        document.getElementById('signup-form').style.display = 'none';
-        document.getElementById('thank-you-message').style.display = 'block';
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again later.');
-    });
 });
 </script>
 </body>
