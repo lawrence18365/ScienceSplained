@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="https://sciencesplained.com" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScienceSplained: Breaking Down Research for Gen Z</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+  :root {
+    --primary-color: #00FFA3;
+    --secondary-color: #0D0D0D;
+    --accent-color: #FF3366;
+    --text-color: #FFFFFF;
+    --header-height: 80px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+
+  header {
+    background-color: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  .logo:hover {
+    transform: scale(1.05);
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+  }
+
+  .nav-links li {
+    margin-left: 30px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-color);
+  }
+
+  main {
+    margin-top: var(--header-height);
+    padding: 40px 0;
+  }
+
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--secondary-color), #1A1A1A);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-content {
+    flex: 1;
+    padding: 0 40px;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: var(--primary-color);
+  }
+
+  .hero p {
+    font-size: 18px;
+    max-width: 500px;
+    margin: 0 auto 30px;
+  }
+
+  .hero-image {
+    flex: 1;
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  .hero-image img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+  }
+
+  .signup-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .signup-form input[type="email"] {
+    padding: 12px 20px;
+    width: 300px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    border-radius: 30px 0 0 30px;
+    font-size: 16px;
+    outline: none;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: 12px 30px;
+    border: none;
+    border-radius: 0 30px 30px 0;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .cta-button:hover {
+    background-color: #FF4D7F;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 51, 102, 0.3);
+  }
+
+  .featured-articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+  }
+
+  .article-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .article-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  }
+
+  .article-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    opacity: 0.8;
+  }
+
+  .article-content {
+    padding: 20px;
+  }
+
+  .article-title {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+  }
+
+  .article-excerpt {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 15px;
+  }
+
+  .read-more {
+    display: inline-block;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .read-more::after {
+    content: '→';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .read-more:hover::after {
+    opacity: 1;
+    right: -25px;
+  }
+
+  .about-section {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 80px 0;
+    margin-top: 60px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  .about-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .about-text {
+    flex: 1;
+    padding-right: 40px;
+  }
+
+  .about-image {
+    flex: 1;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.8;
+  }
+
+  footer {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      padding: 60px 0;
+    }
+
+    .hero-content, .hero-image {
+      flex: none;
+      width: 100%;
+    }
+
+    .hero-image {
+      height: 300px;
+      margin-top: 40px;
+    }
+
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: var(--header-height);
+      left: 0;
+      width: 100%;
+      background-color: var(--secondary-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-links.active {
+      display: flex;
+    }
+
+    .nav-links li {
+      margin: 0;
+      text-align: center;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 10px;
+    }
+
+    .mobile-menu-toggle {
+      display: block;
+    }
+
+    .signup-form {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .signup-form input[type="email"] {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 30px;
+      margin-bottom: 10px;
+    }
+
+    .cta-button {
+      border-radius: 30px;
+    }
+
+    .about-content {
+      flex-direction: column;
+    }
+
+    .about-text {
+      padding-right: 0;
+      margin-bottom: 40px;
+    }
+  }
+</style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">ScienceSplained</a>
+                <ul class="nav-links">
+                    <li><a href="#featured">Featured</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#subscribe">Subscribe</a></li>
+                </ul>
+                <div class="mobile-menu-toggle">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content container">
+                <h1>Decode the Complexity of Science</h1>
+                <p>Transforming intricate research into bite-sized, mind-blowing insights for the curious Gen Z.</p>
+                <form class="signup-form" action="/subscribe" method="POST">
+                    <input type="email" name="email" placeholder="Your email address" required>
+                    <button type="submit" class="cta-button">Join the Discovery</button>
+                </form>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Scientific research visualization">
+            </div>
+        </section>
+
+        <section id="featured" class="container">
+            <h2>Latest Mind-Benders</h2>
+            <div class="featured-articles">
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Quantum computing visualization" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">Quantum Leap: The Future of Computing</h3>
+                        <p class="article-excerpt">Dive into the mind-bending world of quantum computing and its potential to revolutionize technology.</p>
+                        <a href="#" class="read-more">Explore the Quantum Realm</a>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Brain visualization" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">Rewiring Your Brain: The Science of Habits</h3>
+                        <p class="article-excerpt">Uncover the neurological secrets behind habit formation and learn how to hack your brain for success.</p>
+                        <a href="#" class="read-more">Upgrade Your Mind</a>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Climate change effects" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">Climate Crisis: The Gen Z Perspective</h3>
+                        <p class="article-excerpt">Explore cutting-edge climate research and discover how your generation can lead the charge for change.</p>
+                        <a href="#" class="read-more">Join the Green Revolution</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container about-content">
+                <div class="about-text">
+                    <h2>About ScienceSplained</h2>
+                    <p>We're not your average science nerds. We're a squad of young, passionate researchers and communicators on a mission to make science cool again. Our goal? To break down the walls between complex academic jargon and everyday understanding, serving up the hottest scientific discoveries in a format that's easy to digest and impossible to ignore.</p>
+                    <p>Whether you're a science enthusiast or just curious about the world around you, ScienceSplained is your ticket to the frontiers of human knowledge. Let's explore the universe together, one mind-blowing fact at a time.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="ScienceSplained team">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 ScienceSplained. Pushing the boundaries of knowledge, one explanation at a time.</p>
+        </div>
+    </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+      const nav = document.querySelector('header nav');
+
+      mobileMenuToggle.addEventListener('click', function() {
+        nav.querySelector('.nav-links').classList.toggle('active');
+      });
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+          // Close mobile menu after clicking a link
+          nav.querySelector('.nav-links').classList.remove('active');
+        });
+      });
+
+      // Shrink header on scroll
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+          document.querySelector('header').style.height = '60px';
+        } else {
+          document.querySelector('header').style.height = '80px';
+        }
+      });
+
+      // Animate elements on scroll
+      const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.article-card, .about-content');
+        elements.forEach(element => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementBottom = element.getBoundingClientRect().bottom;
+          if (elementTop < window.innerHeight && elementBottom > 0) {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+          }
+        });
+      };
+
+      window.addEventListener('scroll', animateOnScroll);
+      animateOnScroll(); // Run once on load
+
+      // Parallax effect for hero image
+      window.addEventListener('scroll', function() {
+        const heroImage = document.querySelector('.hero-image img');
+        const scrollPosition = window.pageYOffset;
+        heroImage.style.transform = `translate(-50%, -${50 + scrollPosition * 0.05}%)`;
+      });
+
+      // Typing effect for hero title
+      const heroTitle = document.querySelector('.hero h1');
+      const titleText = heroTitle.textContent;
+      heroTitle.textContent = '';
+      let i = 0;
+      const typeWriter = function() {
+        if (i < titleText.length) {
+          heroTitle.textContent += titleText.charAt(i);
+          i++;
+          setTimeout(typeWriter, 50);
+        }
+      };
+      typeWriter();
+
+      // Interactive hover effect for article cards
+      const articleCards = document.querySelectorAll('.article-card');
+      articleCards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
