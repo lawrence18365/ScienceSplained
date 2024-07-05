@@ -469,17 +469,29 @@
       });
 
       // Smooth scrolling for navigation links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-          });
-          // Close mobile menu after clicking a link
-          nav.querySelector('.nav-links').classList.remove('active');
-        });
-      });
-
+      document.getElementById('signup-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    var formData = new FormData(form);
+    fetch('YOUR_NEW_GOOGLE_SCRIPT_URL', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(result => {
+        document.getElementById('signup-form').style.display = 'none';
+        document.getElementById('thank-you-message').style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+    });
+});
       // Shrink header on scroll
       window.addEventListener('scroll', function() {
         if (window.scrollY > 100) {
