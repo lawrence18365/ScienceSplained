@@ -460,37 +460,60 @@
     </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-      const nav = document.querySelector('header nav');
+   document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const nav = document.querySelector('header nav');
+  
+  mobileMenuToggle.addEventListener('click', function() {
+    nav.querySelector('.nav-links').classList.toggle('active');
+  });
 
-      mobileMenuToggle.addEventListener('click', function() {
-        nav.querySelector('.nav-links').classList.toggle('active');
+  // Smooth scrolling for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
       });
+      // Close mobile menu after clicking a link
+      nav.querySelector('.nav-links').classList.remove('active');
+    });
+  });
 
-      // Smooth scrolling for navigation links
-      document.getElementById('signup-form').addEventListener('submit', function(e) {
+  // Form submission
+  document.getElementById('signup-form').addEventListener('submit', function(e) {
     e.preventDefault();
     var form = this;
     var formData = new FormData(form);
-    fetch('YOUR_NEW_GOOGLE_SCRIPT_URL', {
-        method: 'POST',
-        body: formData
+    fetch('https://script.google.com/macros/s/AKfycbweWYdtOmMkiSglwIRj9V53jjjQzaVNv1L6riMJ-ycqGE17PZ4apcJUGM22voER2U_1ug/exec', {
+      method: 'POST',
+      body: formData
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then(result => {
+    .then(response => response.json())
+    .then(data => {
+      if (data.result === 'success') {
         document.getElementById('signup-form').style.display = 'none';
         document.getElementById('thank-you-message').style.display = 'block';
+      } else {
+        alert(data.message);
+      }
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again later.');
+      console.error('Error:', error);
+      alert('An error occurred. Please try again later.');
     });
+  });
+
+  // Shrink header on scroll
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 100) {
+      document.querySelector('header').style.height = '60px';
+    } else {
+      document.querySelector('header').style.height = '80px';
+    }
+  });
+
+  // Add any other existing functionality here
 });
       // Shrink header on scroll
       window.addEventListener('scroll', function() {
