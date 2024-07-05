@@ -395,7 +395,7 @@
             <div class="hero-content container">
                 <h1>Decode the Complexity of Science</h1>
                 <p>Transforming intricate research into bite-sized, mind-blowing insights for the curious Gen Z.</p>
-<form id="signup-form" class="signup-form">
+<form id="signup-form" class="signup-form" method="POST" action="https://script.google.com/macros/s/AKfycbweWYdtOmMkiSglwIRj9V53jjjQzaVNv1L6riMJ-ycqGE17PZ4apcJUGM22voER2U_1ug/exec">
     <input type="email" name="email" placeholder="Your email address" required>
     <button type="submit" class="cta-button">Join the Discovery</button>
 </form>
@@ -542,8 +542,21 @@
 <script>
 document.getElementById('signup-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    document.getElementById('signup-form').style.display = 'none';
-    document.getElementById('thank-you-message').style.display = 'block';
+    var form = this;
+    var formData = new FormData(form);
+    fetch('https://script.google.com/macros/s/AKfycbweWYdtOmMkiSglwIRj9V53jjjQzaVNv1L6riMJ-ycqGE17PZ4apcJUGM22voER2U_1ug/exec', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        document.getElementById('signup-form').style.display = 'none';
+        document.getElementById('thank-you-message').style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+    });
 });
 </script>
 </body>
