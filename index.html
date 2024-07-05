@@ -490,15 +490,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // Form submission
   var form = document.getElementById('signup-form');
   var submitButton = form.querySelector('button[type="submit"]');
+  var thankYouMessage = document.getElementById('thank-you-message');
+  var errorMessage = document.getElementById('error-message');
   
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     
     // Disable submit button to prevent double submission
-    submitButton.disabled = true;
+     submitButton.disabled = true;
     
     var formData = new FormData(form);
-    fetch('https://script.google.com/macros/s/AKfycbweWYdtOmMkiSglwIRj9V53jjjQzaVNv1L6riMJ-ycqGE17PZ4apcJUGM22voER2U_1ug/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbxfh6DumZ5OdjRSBNYG27B7YK40B8tajTA-brCHpPdRTQZpYOfHLE7HfIeAUUM3MQkyTg/exec', {
       method: 'POST',
       body: formData
     })
@@ -506,18 +508,27 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(data => {
       if (data.result === 'success') {
         form.style.display = 'none';
-        document.getElementById('thank-you-message').style.display = 'block';
+        thankYouMessage.textContent = data.message;
+        thankYouMessage.style.display = 'block';
       } else {
-        alert(data.message);
+        errorMessage.textContent = data.message;
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          errorMessage.style.display = 'none';
+        }, 3000);
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('An error occurred. Please try again later.');
+      errorMessage.textContent = 'An error occurred. Please try again later.';
+      errorMessage.style.display = 'block';
+      setTimeout(() => {
+        errorMessage.style.display = 'none';
+      }, 3000);
     })
     .finally(() => {
       // Re-enable submit button
-      submitButton.disabled = false;
+    submitButton.disabled = false;
     });
   });
 
