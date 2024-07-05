@@ -460,7 +460,7 @@
     </footer>
 
   <script>
-   document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
   const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
   const nav = document.querySelector('header nav');
   
@@ -479,11 +479,24 @@
       nav.querySelector('.nav-links').classList.remove('active');
     });
   });
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const nav = document.querySelector('header nav');
+  
+  mobileMenuToggle.addEventListener('click', function() {
+    nav.querySelector('.nav-links').classList.toggle('active');
+  });
 
   // Form submission
-  document.getElementById('signup-form').addEventListener('submit', function(e) {
+  var form = document.getElementById('signup-form');
+  var submitButton = form.querySelector('button[type="submit"]');
+  
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
-    var form = this;
+    
+    // Disable submit button to prevent double submission
+    submitButton.disabled = true;
+    
     var formData = new FormData(form);
     fetch('https://script.google.com/macros/s/AKfycbweWYdtOmMkiSglwIRj9V53jjjQzaVNv1L6riMJ-ycqGE17PZ4apcJUGM22voER2U_1ug/exec', {
       method: 'POST',
@@ -492,7 +505,7 @@
     .then(response => response.json())
     .then(data => {
       if (data.result === 'success') {
-        document.getElementById('signup-form').style.display = 'none';
+        form.style.display = 'none';
         document.getElementById('thank-you-message').style.display = 'block';
       } else {
         alert(data.message);
@@ -501,6 +514,10 @@
     .catch(error => {
       console.error('Error:', error);
       alert('An error occurred. Please try again later.');
+    })
+    .finally(() => {
+      // Re-enable submit button
+      submitButton.disabled = false;
     });
   });
 
@@ -513,66 +530,54 @@
     }
   });
 
-  // Add any other existing functionality here
-});
-      // Shrink header on scroll
-      window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
-          document.querySelector('header').style.height = '60px';
-        } else {
-          document.querySelector('header').style.height = '80px';
-        }
-      });
-
-      // Animate elements on scroll
-      const animateOnScroll = function() {
-        const elements = document.querySelectorAll('.article-card, .about-content');
-        elements.forEach(element => {
-          const elementTop = element.getBoundingClientRect().top;
-          const elementBottom = element.getBoundingClientRect().bottom;
-          if (elementTop < window.innerHeight && elementBottom > 0) {
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-          }
-        });
-      };
-
-      window.addEventListener('scroll', animateOnScroll);
-      animateOnScroll(); // Run once on load
-
-      // Parallax effect for hero image
-      window.addEventListener('scroll', function() {
-        const heroImage = document.querySelector('.hero-image img');
-        const scrollPosition = window.pageYOffset;
-        heroImage.style.transform = `translate(-50%, -${50 + scrollPosition * 0.05}%)`;
-      });
-
-      // Typing effect for hero title
-      const heroTitle = document.querySelector('.hero h1');
-      const titleText = heroTitle.textContent;
-      heroTitle.textContent = '';
-      let i = 0;
-      const typeWriter = function() {
-        if (i < titleText.length) {
-          heroTitle.textContent += titleText.charAt(i);
-          i++;
-          setTimeout(typeWriter, 50);
-        }
-      };
-      typeWriter();
-
-      // Interactive hover effect for article cards
-      const articleCards = document.querySelectorAll('.article-card');
-      articleCards.forEach(card => {
-        card.addEventListener('mousemove', function(e) {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty('--mouse-x', `${x}px`);
-          card.style.setProperty('--mouse-y', `${y}px`);
-        });
-      });
+  // Animate elements on scroll
+  const animateOnScroll = function() {
+    const elements = document.querySelectorAll('.article-card, .about-content');
+    elements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const elementBottom = element.getBoundingClientRect().bottom;
+      if (elementTop < window.innerHeight && elementBottom > 0) {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      }
     });
+  };
+  window.addEventListener('scroll', animateOnScroll);
+  animateOnScroll(); // Run once on load
+
+  // Parallax effect for hero image
+  window.addEventListener('scroll', function() {
+    const heroImage = document.querySelector('.hero-image img');
+    const scrollPosition = window.pageYOffset;
+    heroImage.style.transform = `translate(-50%, -${50 + scrollPosition * 0.05}%)`;
+  });
+
+  // Typing effect for hero title
+  const heroTitle = document.querySelector('.hero h1');
+  const titleText = heroTitle.textContent;
+  heroTitle.textContent = '';
+  let i = 0;
+  const typeWriter = function() {
+    if (i < titleText.length) {
+      heroTitle.textContent += titleText.charAt(i);
+      i++;
+      setTimeout(typeWriter, 50);
+    }
+  };
+  typeWriter();
+
+  // Interactive hover effect for article cards
+  const articleCards = document.querySelectorAll('.article-card');
+  articleCards.forEach(card => {
+    card.addEventListener('mousemove', function(e) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+});
   </script>
 <script>
 document.getElementById('signup-form').addEventListener('submit', function(e) {
